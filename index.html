@@ -3,124 +3,123 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Chat Interface</title>
+  <title>YouTube Dark Mode (Mockup)</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background-color: #f0f2f5;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
+      background-color: #0f0f0f;
+      color: #fff;
     }
-
-    header {
-      background-color: #10a37f;
-      color: white;
-      padding: 1rem;
-      text-align: center;
-      font-size: 1.5rem;
-    }
-
-    .chat-container {
-      flex: 1;
+    header, nav, .top-bar {
       display: flex;
-      flex-direction: column;
+      align-items: center;
+      padding: 10px 16px;
+      background-color: #181818;
+      border-bottom: 1px solid #333;
+    }
+    .top-bar {
       justify-content: space-between;
-      padding: 1rem;
-      overflow-y: auto;
     }
-
-    .message {
-      max-width: 80%;
-      margin-bottom: 1rem;
-      padding: 0.75rem 1rem;
-      border-radius: 10px;
-      line-height: 1.4;
-    }
-
-    .user {
-      align-self: flex-end;
-      background-color: #daf5e8;
-    }
-
-    .bot {
-      align-self: flex-start;
-      background-color: #fff;
-      border: 1px solid #ddd;
-    }
-
-    .input-area {
-      display: flex;
-      padding: 1rem;
-      background-color: white;
-      border-top: 1px solid #ddd;
-    }
-
-    .input-area input {
-      flex: 1;
-      padding: 0.75rem;
-      font-size: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-
-    .input-area button {
-      margin-left: 0.5rem;
-      padding: 0.75rem 1rem;
-      font-size: 1rem;
-      background-color: #10a37f;
-      color: white;
+    .top-bar input {
+      background: #222;
       border: none;
-      border-radius: 5px;
+      padding: 8px;
+      color: white;
+      border-radius: 4px;
+    }
+    nav button {
+      background: none;
+      border: none;
+      color: white;
+      margin-right: 20px;
+      font-size: 16px;
       cursor: pointer;
     }
-
-    .input-area button:hover {
-      background-color: #0d8b6c;
+    .categories {
+      display: flex;
+      overflow-x: auto;
+      background-color: #181818;
+      padding: 10px;
+      gap: 10px;
+    }
+    .categories span {
+      background-color: #333;
+      padding: 8px 12px;
+      border-radius: 20px;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 16px;
+      padding: 16px;
+    }
+    .video-box {
+      background-color: #222;
+      height: 100px;
+      border-radius: 6px;
+    }
+    footer {
+      padding: 16px;
+      text-align: center;
+      color: #666;
+      font-size: 14px;
     }
   </style>
 </head>
 <body>
-  <header>Chat with AI.</header>
-  <div class="chat-container" id="chat">
-    <div class="message bot">Hi! I'm your assistant. How can I help?</div>
+
+  <!-- Top Navigation Bar -->
+  <header>
+    <button>☰</button>
+    <nav>
+      <button>Home</button>
+      <button>Shorts</button>
+      <button>Subscriptions</button>
+      <button>Library</button>
+    </nav>
+  </header>
+
+  <!-- Search/Profile -->
+  <div class="top-bar">
+    <input type="text" placeholder="Search">
+    <div>
+      <button>👤</button>
+    </div>
   </div>
 
-  <div class="input-area">
-    <input type="text" id="userInput" placeholder="Type a message..." />
-    <button onclick="sendMessage()">Send</button>
+  <!-- Horizontal Category Scroll -->
+  <div class="categories">
+    <span>All</span>
+    <span>Gaming</span>
+    <span>Music</span>
+    <span>Live</span>
+    <span>Podcasts</span>
+    <span>Movies</span>
+    <span>Learning</span>
   </div>
 
-  <script>
-    function sendMessage() {
-      const input = document.getElementById('userInput');
-      const chat = document.getElementById('chat');
-      const userMessage = input.value.trim();
+  <!-- Colored Video Boxes Grid -->
+  <div class="video-grid">
+    <div class="video-box" style="background-color: #3b82f6;"></div>
+    <div class="video-box" style="background-color: #ef4444;"></div>
+    <div class="video-box" style="background-color: #10b981;"></div>
+    <div class="video-box" style="background-color: #f59e0b;"></div>
+    <div class="video-box" style="background-color: #8b5cf6;"></div>
+    <div class="video-box" style="background-color: #ec4899;"></div>
+    <div class="video-box" style="background-color: #22d3ee;"></div>
+    <div class="video-box" style="background-color: #f43f5e;"></div>
+    <div class="video-box" style="background-color: #84cc16;"></div>
+    <div class="video-box" style="background-color: #eab308;"></div>
+    <!-- Add more video-boxes as needed -->
+  </div>
 
-      if (userMessage === '') return;
+  <footer>
+    Mockup of YouTube Home (Dark Mode) – MVP Layout with Colored Boxes
+  </footer>
 
-      const userDiv = document.createElement('div');
-      userDiv.className = 'message user';
-      userDiv.innerText = userMessage;
-      chat.appendChild(userDiv);
-
-      // Fake AI response
-      const botDiv = document.createElement('div');
-      botDiv.className = 'message bot';
-      botDiv.innerText = "I'm just a static bot in this demo! 😄";
-      setTimeout(() => {
-        chat.appendChild(botDiv);
-        chat.scrollTop = chat.scrollHeight;
-      }, 500);
-
-      input.value = '';
-      chat.scrollTop = chat.scrollHeight;
-    }
-  </script>
 </body>
 </html>
+
