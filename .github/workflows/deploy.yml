@@ -1,8 +1,7 @@
-name: Deploy to i386 Server
+name: Docker Deploy to i386
 on:
   push:
-    branches:
-      - main  # This triggers the magic every time you push code
+    branches: [ main ]
 
 jobs:
   deploy:
@@ -11,13 +10,21 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Sync to Server
+      - name: Sync Files to Server
         uses: easingthemes/ssh-deploy@main
         with:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           REMOTE_HOST: ${{ secrets.SERVER_IP }}
           REMOTE_USER: ${{ secrets.SERVER_USER }}
-          # This is the folder on your i386 server where code will land:
           TARGET: "/home/${{ secrets.SERVER_USER }}/ai-project"
-          # We don't send the venv or node_modules because they are different for i386
-          EXCLUDE: "/node_modules/, /venv/, /.git/"
+
+      - name: Restart Docker Containers
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd ~/ai-project
+            docker-compose down
+            docker-compose up -d --build
