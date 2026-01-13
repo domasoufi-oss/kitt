@@ -1,16 +1,14 @@
 services:
-  brain:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
+  face:
+    build: ./frontend
+    container_name: ai-project_face_1
     ports:
-      - "8000:8000"
+      - "3000:3000"  # <--- THIS LINE IS MISSING OR INCORRECT
     restart: always
 
-  face:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    depends_on:
-      - brain
+  brain:
+    build: ./backend
+    container_name: ai-project_brain_1
+    ports:
+      - "8000:8000"
     restart: always
