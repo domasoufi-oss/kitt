@@ -26,13 +26,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /home/adem/ai-project
-            # 1. Force Git to discard any local changes on the server
-            sudo rm -rf frontend/dockerfile
-            # 2. The rsync/copy step happens before this script, so we 
-            # check if the NEW file actually arrived:
             cat frontend/dockerfile
-            # 3. Clean up the broken Docker state
-            sudo docker-compose down --remove-orphans
-            # 4. Build without using the old 'poisoned' cache
-            sudo docker-compose build --no-cache
-            sudo docker-compose up -d
+            # No sudo needed here if 'adem' is in the docker group
+            docker-compose down
+            docker-compose build
+            docker-compose up -d
