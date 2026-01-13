@@ -1,13 +1,13 @@
-# Use the official 32-bit Debian image (the same base as your Python)
 FROM i386/debian:bookworm-slim
 
-# Install Node.js and Tools
+# Install Node.js directly from Debian's own 32-bit repositories
 RUN apt-get update && apt-get install -y \
-    curl \
-    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
-    && apt-get install -y nodejs \
-    && npm install -g typescript ts-node \
+    nodejs \
+    npm \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install your global tools
+RUN npm install -g typescript ts-node
 
 WORKDIR /app
 COPY . .
