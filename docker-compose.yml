@@ -1,9 +1,16 @@
 services:
   brain:
-    build: ./backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     ports:
       - "8000:8000"
+    restart: always
+
   face:
-    build: ./frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
     depends_on:
       - brain
+    restart: always
