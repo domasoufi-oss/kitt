@@ -1,12 +1,13 @@
-// No fancy imports for a second, just plain logic
-console.log("---------------------------------------");
-console.log("STARTING THE 32-BIT FRONTEND SERVICE");
-console.log("---------------------------------------");
+import express, { Request, Response } from 'express';
 
-const message: string = "Hello! Your TS code is working.";
+const app = express();
+const port = 3000;
 
-// This will print every 10 seconds so you can see it in 'docker logs'
-setInterval(() => {
-    const time = new Date().toLocaleTimeString();
-    console.log(`[${time}] ${message}`);
-}, 10000);
+app.get('/', (req: Request, res: Response) => {
+    res.send('TS is now working on Windows and Linux!');
+});
+
+// Use '0.0.0.0' to allow external traffic from your router
+app.listen(port, '0.0.0.0', () => {
+    console.log(`Face is listening on all interfaces at port ${port}`);
+});
