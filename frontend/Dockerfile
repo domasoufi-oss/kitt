@@ -1,5 +1,6 @@
-# Use a 32-bit Node image
-FROM node:20-bookworm-slim
+# This specific path points to the 32-bit Debian-based image
+FROM i386/node:18-slim
+
 WORKDIR /app
 COPY . .
 RUN npm install -g typescript ts-node
